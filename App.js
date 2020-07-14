@@ -7,7 +7,7 @@ const { db } = require("./models");
 const app = express();
 app.use(morgan('dev'));
 // FOR GRABBING CONTENTS FROM public DIR
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/public/stylesheets"));
 
 db.authenticate().
 then(() => {
