@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const layout = require("./views/layout");
 
 const app = express();
 app.use(morgan('dev'));
@@ -7,8 +8,9 @@ app.use(morgan('dev'));
 app.use(express.static(__dirname + "/public"));
 
 app.get("/", (req, res) => {
-    res.send(`<div>hello world</div>`);
-})
+    const content='';
+    res.send(layout(content));
+});
 
 app.listen(3000);
 
