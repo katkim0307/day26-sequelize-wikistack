@@ -8,9 +8,14 @@ const wikiRouter = require("./routes/wiki");
 const userRouter = require("./routes/user");
 
 const app = express();
+
 app.use(morgan('dev'));
 // FOR GRABBING CONTENTS FROM public DIR
 app.use(express.static(__dirname + "/public"));
+// PARSE THE REQUEST BODY
+app.use(express.urlencoded({ extended: false }));
+// PARSE THE JSON
+app.use(express.json());
 
 db.authenticate().
 then(() => {
@@ -23,6 +28,10 @@ app.get("/", (req, res) => {
     const content='';
     res.send(layout(content));
 });
+
+// app.get("/", (req, res, next) => {
+//     res.redirect('/wiki');
+// })
 
 const PORT = 3000;
 
@@ -41,10 +50,4 @@ const init = async () => {
 init();
 
 // app.listen(3000);
-
-
-
-
-
-
 
