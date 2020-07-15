@@ -4,6 +4,7 @@ const db = new Sequelize('wikistack', 'postgres', 'jh810506', {
     logging: false,
 })
 
+// CREATE A SCHEMA FOR THE PAGE MODEL
 const Page = db.define('page', {
     title: {
         type: Sequelize.STRING
@@ -19,6 +20,7 @@ const Page = db.define('page', {
     },
 });
 
+// CREATE A SCHEMA FOR THE USER MODEL
 const User = db.define('user', {
     name: {
         type: Sequelize.STRING
@@ -28,6 +30,6 @@ const User = db.define('user', {
     },
 });
 
-module.exports = { Page, User };
+module.exports = { db, Page, User };
 
 
