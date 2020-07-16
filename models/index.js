@@ -4,10 +4,10 @@ const db = new Sequelize('wikistack', 'postgres', 'jh810506', {
     logging: false,
 })
 
-// CREATE A SCHEMA FOR THE PAGE MODEL
+// CREATE A SCHEMA FOR THE PAGE MODEL WITH CONFIG OBJECTS
 const Page = db.define('page', {
     title: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING,  // or title: db.Sequelize.STRING
         allowNull: false,
     },
     slug: {
@@ -23,10 +23,21 @@ const Page = db.define('page', {
     },
 });
 
-// CREATE A SCHEMA FOR THE USER MODEL
+Page.beforeValidate((pageInstance, optionsObj) => {
+    // IN CASE THE TITLE IS MISSING:
+    if (pageInstance.title === '') {
+        pageInstance.slug = 'no_title';
+    } else {
+    // REMOVES ALL NON-ALPHANUMERIC CHARACTERS FROM TITLE
+    // AND MAKE WHITESPACE UNDERSCORE 
+    pageInstance.slug = pageInstance.title.replace(/\s+/g, '_').replace(/\W/g, '');
+    }
+});
+
+// CREATE A SCHEMA FOR THE USER MODEL WITH CONFIG OBJECTS
 const User = db.define('user', {
     name: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING, 
         allowNull: false,
     },
     email: {
