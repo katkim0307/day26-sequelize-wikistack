@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const { Page } = require("../models");
-const { addPage } = require('../views');
-const { wikiPage } = require('../views');
-// const { regexp } = require('sequelize/types/lib/operators');
+const { addPage, wikiPage, main } = require('../views');
 
 // RETRIEVES ALL WIKI PAGES
-router.get('/', (req, res, next) => {
-    res.send('got to GET /wiki/');
+router.get('/', async (req, res, next) => {
+    //res.send('got to GET /wiki/');
+    try {
+        const allPages = await Page.findAll();
+        res.send(main(allPages));
+    } catch (err) { next(err) }
+
 });
 
 // SUBMIT A NEW PAGE TO THE DB

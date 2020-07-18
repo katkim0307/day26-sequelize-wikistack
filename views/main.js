@@ -10,7 +10,10 @@ module.exports = (pages) => layout(html`
   </form>
   <hr>
   <ul class="list-unstyled">
-    <ul>
-      <!-- PLACEHOLDER LIST OF PAGES -->
+    <ul> ${pages.map(page => html`
+      <li><a href="/wiki/${page.slug}>${page.title}</a></li>
+    `
+    )}
     </ul>
   </ul>`);
+  
