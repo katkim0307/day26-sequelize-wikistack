@@ -23,6 +23,7 @@ then(() => {
 })
 
 app.use('/wiki', wikiRouter);
+app.use('/users', userRouter);
 
 app.get("/", (req, res) => {
     const content='';
