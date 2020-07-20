@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Page } = require("../models");
+const { Page, User } = require("../models");
 const { addPage, wikiPage, main } = require('../views');
 
 // RETRIEVES ALL WIKI PAGES
@@ -17,14 +17,31 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
     // res.send('got to POST /wiki/');
     // res.json(req.body); // => test to see the JSON in the browser
-    const page = new Page({
-        title: req.body.title,
-        content: req.body.content,
-        status: req.body.status,
+    // const page = new Page({
+    //     title: req.body.title,
+    //     content: req.body.content,
+    //     status: req.body.status,
+    // });
+    
+    // const user = new User({
+    //     name: req.body.name,
+    //     email: req.body.email,
+    // });
+
+    const [user, wasCreated] = await User.findOrCreate({
+        where: {
+            name: req.body.name,
+            email: req.body.email,
+        },
     });
+
+    const page = await Page.create(req.body);
+
     try {
         await page.save();
+        await user.save();
         // res.redirect('/');
+        page.setAuthor(user);
         res.redirect(`/wiki/${page.slug}`);
     } catch (err) { next(err) }
 });

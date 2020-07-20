@@ -41,8 +41,7 @@ const init = async () => {
     await models.User.sync()
     await models.Page.sync()
     // THIS DROPS ALL TABLES THEN RECREATES THEM BASED ON THE JS DEFINITION
-    // models.db.sync({force: true})
-    models.db.sync({force: false})
+    models.db.sync({force: true})
     app.listen(PORT, () => {
         console.log(`SERVER IS LISTENING ON PORT ${PORT}!`);
     });

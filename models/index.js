@@ -28,16 +28,16 @@ Page.beforeValidate((pageInstance, optionsObj) => {
     if (pageInstance.title === '') {
         pageInstance.slug = 'no_title';
     } else {
-    // REMOVES ALL NON-ALPHANUMERIC CHARACTERS FROM TITLE
-    // AND MAKE WHITESPACE UNDERSCORE 
-    pageInstance.slug = pageInstance.title.replace(/\s+/g, '_').replace(/\W/g, '');
+        // REMOVES ALL NON-ALPHANUMERIC CHARACTERS FROM TITLE
+        // AND MAKE WHITESPACE UNDERSCORE 
+        pageInstance.slug = pageInstance.title.replace(/\s+/g, '_').replace(/\W/g, '');
     }
 });
 
 // CREATE A SCHEMA FOR THE USER MODEL WITH CONFIG OBJECTS
 const User = db.define('user', {
     name: {
-        type: Sequelize.STRING, 
+        type: Sequelize.STRING,
         allowNull: false,
     },
     email: {
@@ -48,6 +48,8 @@ const User = db.define('user', {
         },
     },
 });
+
+Page.belongsTo(User, { as: 'author' });
 
 module.exports = { db, Page, User };
 
