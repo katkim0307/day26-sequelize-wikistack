@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
 });
 
 // SINGLE USER PAGE
-router.get('/:userID', async (req, res, next) => {
+router.get('/:userId', async (req, res, next) => {
     try {
         const user = await User.findByPk(req.params.userId);
         const pages = await Page.findAll ({
