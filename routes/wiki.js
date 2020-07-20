@@ -38,8 +38,8 @@ router.post('/', async (req, res, next) => {
     const page = await Page.create(req.body);
 
     try {
-        await page.save();
-        await user.save();
+        // await page.save();
+        // await user.save();
         // res.redirect('/');
         page.setAuthor(user);
         res.redirect(`/wiki/${page.slug}`);
@@ -60,8 +60,11 @@ router.get('/:slug', async (req, res, next) => {
                 slug: req.params.slug,
             }
         });
+        // QUERYING A PAGE WITH AUTHOR (MODIFY "by PLACEHOLDER AUTHOR NAME") 
+        // BY USING .getAuthor()
+        const user = await page.getAuthor();
         //res.json(page);
-        res.send(wikiPage(page));
+        res.send(wikiPage(page, user));
     }
     catch (err) { next(err) }
 });
