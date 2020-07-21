@@ -1,6 +1,8 @@
 const express = require("express");
 const morgan = require("morgan");
-const { views } = require("./views");
+// const { notFoundPage, errorPage } = require("./views");
+const notFoundPage = require("./views/notFoundPage");
+const errorPage = require("./views/errorPage");
 const layout = require("./views/layout");
 const { db } = require("./models");
 const models = require("./models");
@@ -33,6 +35,17 @@ app.get("/", (req, res) => {
 // app.get("/", (req, res, next) => {
 //     res.redirect('/wiki');
 // })
+
+// HTTP 404 NOT FOUND PAGE
+app.use((req, res, next) => {
+    res.status(404).send(notFoundPage());
+});
+
+// HTTP 500 INTERNAL SERVER ERROR
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send(errorPage(err));
+}); 
 
 const PORT = 3000;
 
