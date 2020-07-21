@@ -1,7 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
-const notFoundPage = require("./views/notFoundPage");
-const errorPage = require("./views/errorPage");
+const { notFoundPage, errorPage } = require("./views");
 const layout = require("./views/layout");
 const { db } = require("./models");
 const models = require("./models");
@@ -54,7 +53,7 @@ const init = async () => {
     await models.User.sync()
     await models.Page.sync()
     // THIS DROPS ALL TABLES THEN RECREATES THEM BASED ON THE JS DEFINITION
-    models.db.sync({force: true})
+    models.db.sync({force: false})
     app.listen(PORT, () => {
         console.log(`SERVER IS LISTENING ON PORT ${PORT}!`);
     });
