@@ -75,7 +75,11 @@ const User = db.define('user', {
     },
 });
 
+// SEQUELIZE ASSOCIATIONS 
+// { as: 'author '} IS AN ADDITIONAL ARGUMENT TO CHANGE THE DB COLUMN TITLE
 Page.belongsTo(User, { as: 'author' });
+// User method .hasMany() TO FIND ALL PAGES WRITTEN BY USER
+User.hasMany(Page, { foreignKey: 'authorId' });
 
 module.exports = { db, Page, User };
 
