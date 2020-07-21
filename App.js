@@ -1,6 +1,5 @@
 const express = require("express");
 const morgan = require("morgan");
-// const { notFoundPage, errorPage } = require("./views");
 const notFoundPage = require("./views/notFoundPage");
 const errorPage = require("./views/errorPage");
 const layout = require("./views/layout");

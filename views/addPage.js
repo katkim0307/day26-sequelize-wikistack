@@ -33,6 +33,13 @@ module.exports = () => layout(html`
         <textarea id="content" name="content" type="text" class="form-control"></textarea>
       </div>
     </div>
+
+    <div class="form-group">
+      <label for="tags" class="col-sm-2 control-label">Page Tags</label>
+      <div class="col-sm-10">
+        <input id="tags" name="tags" type="text" class="form-control"/>
+      </div>
+    </div>
     
     <div class="form-group">
       <label for="status" class="col-sm-2 control-label">Page Status</label>
