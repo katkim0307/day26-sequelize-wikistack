@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const { Op } = require('sequelize');
 const db = new Sequelize('wikistack', 'postgres', 'jh810506', {
     dialect: 'postgres',
     logging: false,
@@ -42,7 +43,22 @@ Page.beforeValidate((pageInstance, optionsObj) => {
 // SEQUELIZE HOOK - VALIDATING/CONVERTING TAGS
 Page.beforeCreate((pageInstance, optionsObj) => {
     pageInstance.tags = pageInstance.tags.split(' ');
-})
+});
+
+// CLASS METHOD FOR findByTag
+Page.findByTag = async (searchTags) => {
+    try {
+        const searchTagList = searchTags.split(' ');
+        const pageWithTagList = await Page.findAll({
+            where: {
+                tags: {
+                    [Op.overlap]: searchTagList
+                }
+            }
+        });
+        return pageWithTagList;
+    } catch (err) { console.error(err) }
+};
 
 // CREATE A SCHEMA FOR THE USER MODEL WITH CONFIG OBJECTS
 const User = db.define('user', {
