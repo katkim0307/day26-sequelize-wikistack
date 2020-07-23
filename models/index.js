@@ -1,10 +1,6 @@
 const Sequelize = require('sequelize');
 const { Op } = require('sequelize');
-const db = new Sequelize('wikistack', 'postgres', 'jh810506', {
-    dialect: 'postgres',
-    logging: false,
-})
-
+const db = new Sequelize('postgres://localhost:5432/wikistack');
 // CREATE A SCHEMA FOR THE PAGE MODEL WITH CONFIG OBJECTS
 const Page = db.define('page', {
     title: {
@@ -40,7 +36,7 @@ Page.beforeValidate((pageInstance, optionsObj) => {
     }
 });
 
-// SEQUELIZE HOOK - VALIDATING/CONVERTING TAGS
+// SEQUELIZE HOOK - CONVERTING TAGS
 Page.beforeCreate((pageInstance, optionsObj) => {
     pageInstance.tags = pageInstance.tags.split(' ');
 });
